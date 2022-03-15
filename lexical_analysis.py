@@ -51,7 +51,7 @@ class LexicalAnalysisTool:
             current_position = match.end()
             match = extract_token(processed_text, current_position)
         if current_position != len(processed_text):
-            raise RuntimeError(f'Error: Unexpected character {processed_text[current_position]} on line {line_number} at {current_position-line_start} position')
+            raise RuntimeError(f'Lexical analysis error: Unexpected character {processed_text[current_position]} on line {line_number} at {current_position-line_start} position')
         yield Token('EOF', '', line_number, current_position-line_start)
 
     def next_token(self):
