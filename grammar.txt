@@ -1,0 +1,50 @@
+
+start -> block EOF
+
+block -> newlines BEGIN newlines assign_statements min_one_newline connect_statements newlines END newlines
+
+assign_statements -> assign_statement assign_statements
+assign_statements -> epsilon
+
+assign_statement -> ID ASSIGN circut_element NEWLINE
+
+circut_element -> VOLTAGESOURCE OPEN_RB vcs_parametr CLOSE_RB
+circut_element -> CURRENTSOURCE OPEN_RB vcs_parametr CLOSE_RB
+circut_element -> VOLTAGEPROBE OPEN_RB CLOSE_RB
+circut_element -> CURRENTPROBE OPEN_RB CLOSE_RB
+circut_element -> CAPACITOR OPEN_RB value CLOSE_RB
+circut_element -> INDUCTOR OPEN_RB value CLOSE_RB
+circut_element -> RESISTOR OPEN_RB value CLOSE_RB
+circut_element -> DIODE OPEN_RB diode_parameters CLOSE_RB
+
+vcs_parameter -> value
+vcs_parameter -> epsilon
+
+diode_parameters -> ID ASSIGN value next_diode_param
+diode_parameters -> epsilon
+
+next_diode_parameter -> COMMA diode_parameters
+next_diode_parameter -> epsilon
+
+value -> NUMBER
+value -> INT12
+
+min_one_newline -> NEWLINE newlines
+
+newlines -> min_one_newline
+newlines -> epsilon
+
+
+connect_statements -> connect_statement connect_statements
+connect_statements -> epsilon
+
+connect_statement -> first_element_pin CONNECTION element_pin NEWLINE
+
+first_element_pin -> ID OPEN_SB INT12 CLOSE_SB
+first_element_pin -> GND
+
+element_pin -> ID OPEN_SB INT12 CLOSE_SB next_element_pin
+element_pin -> GND next_element_pin
+
+next_element_pin -> CONNECTION element_pin
+next_element_pin -> epsilon
