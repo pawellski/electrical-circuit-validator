@@ -20,6 +20,7 @@ class SyntaxAnalysisTool:
         if self._token.type == 'NEWLINE' or self._token.type == 'BEGIN':
             self.block()
             self.__verify_token('EOF')
+            print('\nFile is correct!')
         else:
             self.__error('Epsilon not allowed!')
 
@@ -147,6 +148,8 @@ class SyntaxAnalysisTool:
         # value -> INT12
         elif self._token.type == 'INT12':
             self.__verify_token('INT12')
+        else:
+            self.__error('Epsilon not allowed! -> [value]')
 
     def min_one_newline(self):
         # min_one_newline -> NEWLINE newlines
@@ -210,6 +213,8 @@ class SyntaxAnalysisTool:
         elif self._token.type == 'GND':
             self.__verify_token('GND')
             self.next_element_pin()
+        else:
+            self.__error('Epsilon not allowed! -> [element_pin]')
 
     def next_element_pin(self):
         # next_element_pin -> CONNECTION element_pin
